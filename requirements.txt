@@ -1,0 +1,53 @@
+# Speech to text
+webrtcvad-wheels
+pyaudio
+# sounddevice==0.4.6
+#demo
+# SpeechRecognition
+# git+https://github.com/openai/whisper.git
+numpy<2
+torch
+ctranslate2
+faster_whisper
+
+# llm
+nltk==3.8.1
+langchain==0.0.350
+langchain-google-genai==0.0.6
+langchain-community==0.0.13
+python-dotenv==1.0.0
+langchain-core<0.3.0
+
+
+# text to speech
+transformers==4.43.3 
+git+https://github.com/huggingface/parler-tts.git
+soundfile 
+sounddevice 
+protobuf==4.21.6
+
+
+# Speech processing
+# webrtcvad
+# pyaudio
+
+# Natural Language Processing
+# nltk
+
+# LLM integration
+# langchain
+# langchain-google-genai
+
+# Environment and API handling
+# python-dotenv
+
+# Audio processing (for potential future use in STT or TTS)
+# numpy
+# sounddevice
+
+# Potential STT model (uncomment if you decide to use it)
+# whisper
+
+# Potential TTS libraries (uncomment if you decide to use one)
+# gTTS
+# pyttsx3
