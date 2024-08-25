@@ -35,7 +35,7 @@ class VAD:
         self.frame_size = int(sample_rate * frame_duration_ms / 1000)
         self.ring_buffer = collections.deque(maxlen=30)
         self.triggered = False
-        self.model = WhisperModel("small", device="cpu", compute_type="float32")
+        self.model = WhisperModel("medium", device="cpu", compute_type="float32")
 
     def process_audio(self, audio_data):
         with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as temp_file:
@@ -63,10 +63,10 @@ def generate_response(chain, question, max_sentences=2):
         st.error(f"LLM Error: {e}")
         return "I apologize, but I encountered an error while processing your request."
 
-# Text-to-Speech
+# Text-to-Speech using Parler TTS
 class TTS:
     def __init__(self):
-        self.device = "cpu"
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model = ParlerTTSForConditionalGeneration.from_pretrained("parler-tts/parler-tts-mini-v1").to(self.device)
         self.tokenizer = AutoTokenizer.from_pretrained("parler-tts/parler-tts-mini-v1")
         self.sampling_rate = 16000
@@ -96,7 +96,17 @@ def main():
     if 'audio_data' not in st.session_state:
         st.session_state.audio_data = None
 
-    if st.button("Record"):
+    # File upload option
+    uploaded_file = st.file_uploader("Upload an audio file", type=['wav', 'mp3'])
+
+    if uploaded_file is not None:
+        st.audio(uploaded_file, format='audio/wav')
+        audio_bytes = uploaded_file.read()
+        audio_array, _ = sf.read(io.BytesIO(audio_bytes))
+        st.session_state.audio_data = audio_array
+
+    # Microphone recording option
+    if st.button("Record from Microphone"):
         with st.spinner("Recording..."):
             audio_data = record_audio(duration=5)  # Record for 5 seconds
             st.session_state.audio_data = audio_data
@@ -116,7 +126,7 @@ def main():
 
             # Text to Speech
             with st.spinner("Converting text to speech..."):
-                description = "Jon's voice is monotone yet slightly fast in delivery, with a very close recording that almost has no background noise."
+                description = "A clear and natural voice with a neutral tone."
                 audio = tts.text_to_speech(response, description)
             
             # Save and play audio
