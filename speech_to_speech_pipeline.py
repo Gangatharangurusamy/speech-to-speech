@@ -4,7 +4,6 @@ import collections
 import sys
 import numpy as np
 import wave
-import io
 from threading import Thread
 from faster_whisper import WhisperModel
 from langchain_google_genai import ChatGoogleGenerativeAI

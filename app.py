@@ -4,7 +4,6 @@ import pyaudio
 import collections
 import numpy as np
 import wave
-import io
 from faster_whisper import WhisperModel
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import ChatPromptTemplate
