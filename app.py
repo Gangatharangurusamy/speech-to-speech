@@ -126,7 +126,7 @@ def main():
 
             # Text to Speech
             with st.spinner("Converting text to speech..."):
-                description = "A clear and natural voice with a neutral tone."
+                description = "A female speaker delivers a slightly expressive and animated speech with a moderate speed and pitch. The recording is of very high quality, with the speaker's voice sounding clear and very close up."
                 audio = tts.text_to_speech(response, description)
             
             # Save and play audio

@@ -4,7 +4,6 @@ import collections
 import sys
 import numpy as np
 import wave
-import io
 from faster_whisper import WhisperModel
 
 class VAD:
