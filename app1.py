@@ -1,7 +1,8 @@
 import streamlit as st
+import os
 import torch
 import soundfile as sf
-import os
+
 # Import functions from the respective scripts
 from vad_s2t_demo import VAD
 from llm import generate_response
@@ -44,3 +45,4 @@ if st.button("Start Listening"):
         st.error(f"An error occurred during audio processing: {e}")
     except Exception as ex:
         st.error(f"An unexpected error occurred: {ex}")
+
