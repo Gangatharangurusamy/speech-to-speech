@@ -9,7 +9,6 @@ from faster_whisper import WhisperModel
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import ChatPromptTemplate
 from langchain.chains import LLMChain
-from langchain.callbacks import get_openai_callback
 import os
 from dotenv import load_dotenv
 import nltk
@@ -55,8 +54,7 @@ def setup_llm():
 
 def generate_response(chain, question, max_sentences=2):
     try:
-        with get_openai_callback() as cb:
-            response = chain.run(question=question)
+        response = chain.run(question=question)
         sentences = sent_tokenize(response)
         return ' '.join(sentences[:max_sentences])
     except Exception as e:
