@@ -1,82 +1,84 @@
-# Voice Assistant Text-to-Speech (TTS) Project
+# Speech-to-Speech Pipeline
 
-This project implements a text-to-speech pipeline using the Parler-TTS model. The pipeline converts input text into spoken audio with adjustable parameters for speed, pitch, and volume. The project is designed to run on a CPU and can be used to generate audio files or play the audio in real-time.
+## Overview
+
+This project implements a Speech-to-Speech pipeline that converts spoken language into text, processes the text with a language model, and then converts the resulting text back into speech. The pipeline integrates several key components including Voice Activity Detection (VAD), speech recognition using the Whisper model, natural language processing with the Gemini Pro language model, and text-to-speech synthesis using the Parler-TTS model. The entire system is deployed as a web application using Streamlit.
 
 ## Features
 
-- **Text-to-Speech Conversion**: Convert any input text into speech using the Parler-TTS model.
-- **Adjustable Parameters**:
-  - **Speed**: Control the speed of the generated speech.
-  - **Pitch**: (Placeholder) Intended for pitch control, though not currently implemented.
-  - **Volume**: Amplify or reduce the volume of the output speech.
-- **Real-time Audio Playback**: Optionally play audio in real-time as it is being generated.
-- **Audio Saving**: Save the generated audio to a `.wav` file.
+- **Voice Activity Detection (VAD)**: Real-time detection of speech in audio streams.
+- **Speech Recognition**: Converts spoken words into text using the Faster Whisper model.
+- **Language Model Integration**: Processes the transcribed text using the Gemini Pro model to generate a response.
+- **Text-to-Speech Synthesis**: Converts the response text back into speech using the Parler-TTS model.
+- **Streamlit Deployment**: Provides an easy-to-use web interface for interacting with the pipeline.
 
-## Installation
+## File Structure
+
+- `app.py`: Main Streamlit app that integrates all components of the pipeline.
+- `vad_implementation.py`: Implements Voice Activity Detection using the WebRTC VAD module.
+- `vad_s2t_demo.py`: Demonstrates VAD integration with Whisper for speech-to-text conversion.
+- `llm.py`: Handles the text processing using the Gemini Pro language model.
+- `t2s.py`: Implements text-to-speech conversion using the Parler-TTS model.
+- `main.py`: Modular integration of all components for deployment.
+- `requirements.txt`: Python dependencies required to run the project.
+
+## Setup Instructions
 
 ### Prerequisites
 
-- Python 3.8 or higher
-- pip (Python package installer)
+- Python 3.8+
+- [Streamlit](https://streamlit.io/)
+- PyTorch
+- Whisper Model
+- Parler-TTS Model
+- Google API key for accessing Gemini Pro
 
-### Clone the Repository
+### Installation
 
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/speech-to-speech-pipeline.git
+   cd speech-to-speech-pipeline
+   ```
+
+### Create and activate a virtual environment:
 ```bash
-git clone https://github.com/your-username/voice-assistant-tts.git
-cd voice-assistant-tts
+python -m venv venv
+source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 ```
-## Install Dependencies
+### Install the required dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-## Set Up Environment Variables
-### Create a .env file in the root directory and add your Google API key:
+## Set up environment variables:
 
+### Create a `.env` file in the root directory and add your Google API key:
 ```bash
-GOOGLE_API_KEY=your_google_api_key_here
+GOOGLE_API_KEY=your-google-api-key
 ```
+### Open your web browser and navigate to http://localhost:8501 to access the interface.
 
-# Usage
-## Running the TTS Script
-### You can run the TTS script with an example input by executing:
+## Usage
+### Input Speech: Speak into your microphone.
+### Speech Detection: The VAD system detects your speech.
+### Speech-to-Text: Your speech is transcribed into text using the Whisper model.
+### Language Processing: The transcribed text is processed by the Gemini Pro model to generate a response.
+### Text-to-Speech: The generated response is converted back into speech using the Parler-TTS model.
+### Output Speech: The synthesized speech is played back.
 
-```bash
-python t2s.py
-```
-This script will generate audio from the provided text and save it as output.wav.
-
-## Adjustable Parameters
-### Speed: Adjust the speed of speech. Default is 1.0 (normal speed). Values greater than 1.0 increase the speed, while values less than 1.0 decrease it.
-### Pitch: Adjust the pitch of speech. Default is 1.0 (normal pitch). Note: This is a placeholder and not currently implemented.
-### Volume: Adjust the volume of the output. Default is 1.5, which amplifies the volume by 50%.
-
-## Example
-```bash
-text = "This is a test of the Parler-TTS model running on CPU."
-description = "A female speaker delivers a slightly expressive and animated speech with a moderate speed and pitch."
-
-# Adjustable parameters
-speed = 1.5  # Increase speed by 50%
-pitch = 1.0  # Normal pitch
-volume = 1.5  # Amplified volume by 50%
-
-# Generate and save the audio
-audio = text_to_speech(text, description, speed, pitch, volume)
-sf.write("output.wav", audio, sampling_rate)
-```
+## Customization
+### Adjustable Parameters: The speed, pitch, and volume of the output speech can be customized in t2s.py.
+### Model Choices: You can experiment with different models or settings in vad_s2t_demo.py and llm.py.
 
 ## Troubleshooting
-Common Issues
-Model Loading Error: Ensure that the Parler-TTS model and tokenizer are correctly installed and compatible with your environment.
-Slow Performance: Running the TTS model on a CPU can be slow. Consider using a GPU if available.
-Missing .wav File: Ensure that the script has write permissions to the directory.
+### Ensure all dependencies are installed correctly.
+### Check your microphone settings.
+### Verify the API key in the .env file.
+### Refer to terminal output for debugging information.
 
-## Logging and Debugging
-The script includes print statements to provide real-time feedback on the progress of the audio generation process.
-If you encounter any issues, check the console output for error messages.
-
-## Future Improvements
-Pitch Control: Implement functionality to adjust the pitch of the generated speech.
-Command-Line Interface (CLI): Develop a CLI to simplify parameter adjustments without modifying the script.
-Extended Model Support: Explore compatibility with other TTS models or enhanced versions of Parler-TTS.
+## Acknowledgments
+### Streamlit
+### Faster Whisper
+### Parler-TTS
+### Google Gemini Pro
